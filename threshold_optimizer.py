@@ -1,3 +1,6 @@
+import math
+
+
 def find_best_threshold(
     thresholds: list[float],
     precisions: list[float],
@@ -9,14 +12,14 @@ def find_best_threshold(
         raise ValueError("Input lists must have the same length.")
 
     for i in range(len(precisions)):
-        if not (0 <= precisions[i] <= 1):
+        if not math.isfinite(precisions[i]) or not (0 <= precisions[i] <= 1):
             raise ValueError(
                 f"Precision value at index {i} is out of range: {precisions[i]}")
-        if not (0 <= recalls[i] <= 1):
+        if not math.isfinite(recalls[i]) or not (0 <= recalls[i] <= 1):
             raise ValueError(
                 f"Recall value at index {i} is out of range: {recalls[i]}")
 
-    if minimum_recall < 0 or minimum_recall > 1:
+    if not math.isfinite(minimum_recall) or minimum_recall < 0 or minimum_recall > 1:
         raise ValueError(
             f"Minimum recall must be between 0 and 1.")
 
